@@ -1,8 +1,7 @@
 package dev.ashutosh.userservice.controllers;
 
-import dev.ashutosh.userservice.dtos.LoginRequestDto;
-import dev.ashutosh.userservice.dtos.SignUpRequestDto;
-import dev.ashutosh.userservice.dtos.UserDto;
+import dev.ashutosh.userservice.dtos.*;
+import dev.ashutosh.userservice.models.SessionStatus;
 import dev.ashutosh.userservice.services.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,18 +21,29 @@ public class AuthController {
 
         @PostMapping("/login")
         public ResponseEntity<UserDto> login(@RequestBody LoginRequestDto request){
+                System.out.println("Inside login");
                 return authService.login(request.getEmail(), request.getPassword());
 
 
         }
-        public void logout(){
+
+        @PostMapping("/logout")
+        public ResponseEntity<Void> logout(@RequestBody LogoutRequestDto request){
+
+                authService.logout(request.getToken(), request.getUserId());
+                return new ResponseEntity<>(HttpStatus.OK);
 
         }
         @PostMapping("/signup")
         public ResponseEntity<UserDto> signUp(@RequestBody SignUpRequestDto request){
-                System.out.println("Inside signup");
+
                 UserDto userDto = authService.signUp(request.getEmail(), request.getPassword());
                 //System.out.println(request.getEmail());
                 return new ResponseEntity<>(userDto, HttpStatus.OK);
+        }
+        @PostMapping("/validate")
+        public SessionStatus validateToken(@RequestBody ValidateTokenRequestDto request){
+
+                return authService.validateToken(request.getUserId(), request.getToken());
         }
 }
