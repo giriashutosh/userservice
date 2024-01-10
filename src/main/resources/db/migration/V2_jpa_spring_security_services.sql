@@ -1,0 +1,61 @@
+CREATE TABLE client (
+                        id varchar(255) NOT NULL,
+                        clientId varchar(255) NOT NULL,
+                        clientIdIssuedAt timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                        clientSecret varchar(255) DEFAULT NULL,
+                        clientSecretExpiresAt timestamp DEFAULT NULL,
+                        clientName varchar(255) NOT NULL,
+                        clientAuthenticationMethods blob NOT NULL,
+                        authorizationGrantTypes blob NOT NULL,
+                        redirectUris blob DEFAULT NULL,
+                        postLogoutRedirectUris blob DEFAULT NULL,
+                        scopes blob NOT NULL,
+                        clientSettings blob NOT NULL,
+                        tokenSettings blob NOT NULL,
+                        PRIMARY KEY (id)
+);
+
+CREATE TABLE authorization (
+                               id varchar(255) NOT NULL,
+                               registeredClientId varchar(255) NOT NULL,
+                               principalName varchar(255) NOT NULL,
+                               authorizationGrantType varchar(255) NOT NULL,
+                               authorizedScopes blob DEFAULT NULL,
+                               attributes blob DEFAULT NULL,
+                               state blob DEFAULT NULL,
+                               authorizationCodeValue blob DEFAULT NULL,
+                               authorizationCodeIssuedAt timestamp DEFAULT NULL,
+                               authorizationCodeExpiresAt timestamp DEFAULT NULL,
+                               authorizationCodeMetadata blob DEFAULT NULL,
+                               accessTokenValue blob DEFAULT NULL,
+                               accessTokenIssuedAt timestamp DEFAULT NULL,
+                               accessTokenExpiresAt timestamp DEFAULT NULL,
+                               accessTokenMetadata blob DEFAULT NULL,
+                               accessTokenType blob DEFAULT NULL,
+                               accessTokenScopes blob DEFAULT NULL,
+                               refreshTokenValue blob DEFAULT NULL,
+                               refreshTokenIssuedAt timestamp DEFAULT NULL,
+                               refreshTokenExpiresAt timestamp DEFAULT NULL,
+                               refreshTokenMetadata blob DEFAULT NULL,
+                               oidcIdTokenValue blob DEFAULT NULL,
+                               oidcIdTokenIssuedAt timestamp DEFAULT NULL,
+                               oidcIdTokenExpiresAt timestamp DEFAULT NULL,
+                               oidcIdTokenMetadata blob DEFAULT NULL,
+                               oidcIdTokenClaims blob DEFAULT NULL,
+                               userCodeValue blob DEFAULT NULL,
+                               userCodeIssuedAt timestamp DEFAULT NULL,
+                               userCodeExpiresAt timestamp DEFAULT NULL,
+                               userCodeMetadata blob DEFAULT NULL,
+                               deviceCodeValue blob DEFAULT NULL,
+                               deviceCodeIssuedAt timestamp DEFAULT NULL,
+                               deviceCodeExpiresAt timestamp DEFAULT NULL,
+                               deviceCodeMetadata blob DEFAULT NULL,
+                               PRIMARY KEY (id)
+);
+
+CREATE TABLE authorizationConsent (
+                                      registeredClientId varchar(255) NOT NULL,
+                                      principalName varchar(255) NOT NULL,
+                                      authorities blob NOT NULL,
+                                      PRIMARY KEY (registeredClientId, principalName)
+);
